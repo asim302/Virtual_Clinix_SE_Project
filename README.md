@@ -1,210 +1,263 @@
 <div align="center">
+
 # 🏥 Virtual Clinix
 ### *Pakistan's Modern Telemedicine Platform*
-[![React](https://img.shields.io/badge/React-19.x-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
-[![Vite](https://img.shields.io/badge/Vite-8.x-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vite.dev)
-[![Supabase](https://img.shields.io/badge/Supabase-Backend-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com)
-[![Redux Toolkit](https://img.shields.io/badge/Redux_Toolkit-State_Mgmt-764ABC?style=for-the-badge&logo=redux&logoColor=white)](https://redux-toolkit.js.org)
-[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-4.x-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
-**A full-stack telemedicine web application featuring live video consultations, AI-assisted appointment scheduling, digital e-prescriptions, and role-based secure portals for Patients, Doctors, and Administrators.**
-[🚀 Live Demo](#) · [📖 Documentation](./HOW_IT_WORKS.md) · [🐛 Report Bug](../../issues) · [✨ Request Feature](../../issues)
----
+
+![React](https://img.shields.io/badge/React-19.x-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-8.x-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-Backend-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![Redux Toolkit](https://img.shields.io/badge/Redux_Toolkit-State_Mgmt-764ABC?style=for-the-badge&logo=redux&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-4.x-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+
+**A full-stack telemedicine web application featuring live video consultations, AI-assisted appointment scheduling, digital e-prescriptions, and secure role-based portals for Patients, Doctors, and Administrators.**
+
 </div>
-## 📋 Table of Contents
-- [✨ Features](#-features)
-- [🛠️ Tech Stack](#️-tech-stack)
-- [🏗️ Architecture & Database Schema](#️-architecture--database-schema)
-- [🚀 Getting Started](#-getting-started)
-- [⚙️ Environment Variables](#️-environment-variables)
-- [📁 Project Structure](#-project-structure)
-- [🔐 Authentication & Security](#-authentication--security)
-- [🌿 Git Branching Strategy](#-git-branching-strategy)
-- [🤝 Contributing](#-contributing)
-- [👨‍💻 Team](#-team)
+
 ---
-## ✨ Features
-### 👤 Patient Portal
-- **Secure Registration & Login** — Email/password auth with Zod schema validation
-- **Doctor Discovery** — Browse and filter verified doctors by specialty and fee
-- **Online Appointment Booking** — Date, time, and reason selection with real-time confirmation
-- **Live Video Consultation** — One-click join via Jitsi Meet (no download required)
-- **Digital Prescriptions** — View e-prescriptions issued directly by doctors
-- **Profile Management** — Update personal info and notification preferences
-### 🩺 Doctor Portal
-- **Dedicated Dashboard** — View all scheduled and completed appointments at a glance
-- **Patient Directory** — Full clinical history and contact details per patient
-- **Live Video Room** — Join patient sessions via a unique, secure room ID
-- **E-Prescription Writer** — Issue structured digital prescriptions with medications, dosage, and frequency
-- **Session Timer** — Auto-running session clock with call controls (Mute, Camera, Hangup)
-### 🛡️ Admin Portal
-- **Doctor Verification Queue** — Review and Approve/Reject new doctor applications
-- **Analytics Dashboard** — Real-time metrics (patients, doctors, appointments) with Recharts graphs
-- **User Management** — View all registered users and manage their roles
-- **System Health Monitor** — Live audit panel for API status and system uptime
+
+# 📋 Table of Contents
+
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [Architecture](#-architecture--database-schema)
+- [Getting Started](#-getting-started)
+- [Environment Variables](#-environment-variables)
+- [Project Structure](#-project-structure)
+- [Authentication & Security](#-authentication--security)
+- [Git Workflow](#-git-branching-strategy)
+- [Implementation Report](#-virtual-clinix-project-implementation-report)
+- [Team](#-team)
+
 ---
-## 🛠️ Tech Stack
+
+# ✨ Features
+
+## 👤 Patient Portal
+
+- Secure Registration & Login
+- Doctor Discovery & Filtering
+- Online Appointment Booking
+- Live Video Consultation (Jitsi Meet)
+- Digital Prescriptions
+- Profile Management
+
+## 🩺 Doctor Portal
+
+- Doctor Dashboard
+- Patient Directory
+- Live Consultation Room
+- E-Prescription Writer
+- Session Timer & Controls
+
+## 🛡️ Admin Portal
+
+- Doctor Verification Queue
+- Analytics Dashboard
+- User Management
+- System Health Monitoring
+
+---
+
+# 🛠️ Tech Stack
+
 | Category | Technology |
-| :--- | :--- |
-| **Frontend Framework** | React 19 with Vite 8 |
-| **Styling** | TailwindCSS 4.x + Custom CSS Design Tokens |
-| **State Management** | Redux Toolkit + React-Redux |
-| **Routing** | React Router DOM v7 |
-| **Backend & Database** | Supabase (PostgreSQL + Auth + RLS) |
-| **Form Validation** | React Hook Form + Zod |
-| **Video Calls** | Jitsi Meet External API |
-| **Charts & Analytics** | Recharts |
-| **Icons** | Lucide React |
-| **Avatars** | Dicebear Adventurer API |
-| **Build Tool** | Vite with PostCSS + Autoprefixer |
+|---|---|
+| Frontend | React 19 + Vite 8 |
+| Styling | TailwindCSS 4 |
+| State Management | Redux Toolkit |
+| Routing | React Router DOM v7 |
+| Backend | Supabase |
+| Database | PostgreSQL |
+| Validation | React Hook Form + Zod |
+| Video Calls | Jitsi Meet API |
+| Charts | Recharts |
+
 ---
-## 🏗️ Architecture & Database Schema
-The application follows a **role-based, three-portal architecture** backed by a PostgreSQL database on Supabase with **Row Level Security (RLS)** policies to ensure data isolation.
-### Database Tables
+
+# 🏗️ Architecture & Database Schema
+
+```text
+┌──────────────────────────────────────────────┐
+│                 profiles                     │
+│ id · full_name · role · created_at           │
+└──────────────────┬───────────────────────────┘
+                   │
+        ┌──────────┴───────────┐
+        │                      │
+
+┌───────▼───────────┐   ┌──────▼──────────────┐
+│   doctors_info    │   │    appointments     │
+│ specialty · fee   │   │ patient_id          │
+│ rating · city     │   │ doctor_id           │
+│ verified          │   │ appointment_date    │
+└───────────────────┘   └─────────────────────┘
 ```
-┌──────────────────────────────────────────────────────────────┐
-│                       profiles                               │
-│  id (UUID, PK) · full_name · role · created_at               │
-└────────────────────────┬─────────────────────────────────────┘
-                         │ 1:1
-         ┌───────────────┴──────────────┐
-         │                              │
-┌────────▼──────────────┐   ┌──────────▼────────────────────┐
-│     doctors_info      │   │         appointments           │
-│  id · specialty · fee │   │  id · patient_id · doctor_id   │
-│  rating · city        │   │  appointment_date · status     │
-│  is_verified · about  │   │  reason · created_at           │
-└───────────────────────┘   └───────────────────────────────┘
-```
-### Row Level Security (RLS) Policies
-- **Profiles:** Users can only read/update their own profile data
-- **Doctor Info:** Publicly readable; only the doctor can write to their own record
-- **Appointments:** Restricted to the patient and doctor involved in that session
+
 ---
-## 🚀 Getting Started
-### Prerequisites
-Make sure you have the following installed:
-- [Node.js](https://nodejs.org/) (v18 or higher)
-- npm (comes bundled with Node.js)
-- A [Supabase](https://supabase.com) account (free tier is sufficient)
-### 1. Clone the Repository
+
+# 🚀 Getting Started
+
+## 1. Clone Repository
+
 ```bash
 git clone https://github.com/YOUR_USERNAME/virtual-clinix.git
 cd virtual-clinix
 ```
-### 2. Install Dependencies
+
+## 2. Install Dependencies
+
 ```bash
 npm install
 ```
-### 3. Setup Supabase Database
-- Go to your [Supabase Dashboard](https://app.supabase.com) → **SQL Editor**
-- Copy the contents of [`supabase/schema.sql`](./supabase/schema.sql) and run it to create all required tables and RLS policies.
-### 4. Configure Environment Variables
-Create a `.env.local` file in the project root (see [⚙️ Environment Variables](#️-environment-variables) below).
-### 5. Run the Development Server
+
+## 3. Setup Supabase
+
+- Open Supabase Dashboard
+- Go to SQL Editor
+- Run `supabase/schema.sql`
+
+## 4. Create Environment File
+
+Create `.env.local`
+
+```env
+VITE_SUPABASE_URL=your_project_url
+VITE_SUPABASE_ANON_KEY=your_anon_key
+```
+
+## 5. Run Development Server
+
 ```bash
 npm run dev
 ```
-Open your browser and navigate to **`http://localhost:5173`**
-### 6. Build for Production
+
+Open:
+
+```text
+http://localhost:5173
+```
+
+---
+
+# 📁 Project Structure
+
+```text
+virtual-clinix/
+├── public/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── store/
+│   ├── lib/
+│   ├── App.jsx
+│   └── main.jsx
+├── supabase/
+├── package.json
+└── vite.config.js
+```
+
+---
+
+# 🔐 Authentication & Security
+
+- JWT Authentication using Supabase Auth
+- ProtectedRoute Guards
+- Role-Based Access Control
+- Row Level Security (RLS)
+- Environment Variable Protection
+
+---
+
+# 🌿 Git Branching Strategy
+
+```text
+main
+ └── develop
+      ├── feature/realtime-notifications
+      ├── feature/typescript-migration
+      └── feature/pwa-support
+```
+
+---
+
+# 📊 Virtual Clinix Project Implementation Report
+
+| Task | Status |
+|---|---|
+| Redux Wiring | ✅ Completed |
+| Backend Integration | ✅ Completed |
+| Protected Routing | ✅ Completed |
+| Video Call Integration | ✅ Completed |
+| Form Validations | ✅ Completed |
+| UI/Avatar Improvements | ✅ Completed |
+
+---
+
+# 🎥 Jitsi Meet Integration
+
+- Dynamic room joining
+- Shared doctor/patient session rooms
+- Audio/Video Controls
+- Hangup & Session End Handling
+
+---
+
+# ✅ Form Validation
+
+Implemented using:
+
+- React Hook Form
+- Zod Schemas
+- Real-time Validation Feedback
+
+---
+
+# 🎨 UI Improvements
+
+Integrated Dicebear avatars:
+
+```text
+https://api.dicebear.com/7.x/adventurer/svg?seed=username
+```
+
+---
+
+# 🛠️ Build Verification
+
 ```bash
 npm run build
 ```
+
+✅ Build Successful  
+✅ No Syntax Errors  
+✅ Production Ready
+
 ---
-## ⚙️ Environment Variables
-Create a `.env.local` file in the root of your project and add the following keys from your Supabase project settings:
-```env
-# Supabase Configuration
-# Get these from: https://app.supabase.com → Project Settings → API
-VITE_SUPABASE_URL=your_supabase_project_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-```
-> **⚠️ Important:** Never commit your `.env.local` file to Git. It is already listed in `.gitignore`.
+
+# 🤝 Contributing
+
+1. Fork Repository
+2. Create Feature Branch
+3. Commit Changes
+4. Push Changes
+5. Open Pull Request
+
 ---
-## 📁 Project Structure
-```
-virtual-clinix/
-├── public/                     # Static assets
-├── src/
-│   ├── components/
-│   │   ├── ProtectedRoute.jsx  # Auth guard for role-based routing
-│   │   ├── AdminLayout.jsx     # Admin portal layout wrapper
-│   │   └── DoctorLayout.jsx    # Doctor portal layout wrapper
-│   ├── lib/
-│   │   └── supabaseClient.js   # Supabase client initialization
-│   ├── pages/
-│   │   ├── LandingPage.jsx         # Public homepage
-│   │   ├── AuthPage.jsx            # Patient/Doctor auth (login & register)
-│   │   ├── DoctorLogin.jsx         # Doctor-specific login
-│   │   ├── AdminLogin.jsx          # Admin-specific login
-│   │   ├── PatientDashboard.jsx    # Patient portal home
-│   │   ├── DoctorDashboard.jsx     # Doctor portal home
-│   │   ├── DoctorSearchPage.jsx    # Browse & filter verified doctors
-│   │   ├── BookingPage.jsx         # Appointment booking flow
-│   │   ├── ConsultationRoom.jsx    # Live video room (Patient)
-│   │   ├── DoctorConsultationRoom.jsx  # Live video room (Doctor)
-│   │   ├── EPrescription.jsx       # Digital prescription writer
-│   │   ├── DoctorPatientList.jsx   # Patient history directory
-│   │   ├── ProfileSettings.jsx     # Profile management
-│   │   ├── AdminAnalyticsDashboard.jsx # Platform analytics
-│   │   ├── AdminDoctorVerification.jsx # Doctor approval queue
-│   │   └── AdminUserManagement.jsx     # User management
-│   ├── store/
-│   │   ├── index.js                # Redux store + custom hooks
-│   │   └── slices/
-│   │       ├── authSlice.js        # Auth state & async thunks
-│   │       ├── appointmentSlice.js # Appointment CRUD operations
-│   │       └── doctorSlice.js      # Doctor data fetching
-│   ├── App.jsx                 # Root router & route configuration
-│   └── main.jsx                # React + Redux app entry point
-├── supabase/
-│   └── schema.sql              # Full database schema with RLS policies
-├── .env.local                  # 🔒 Local secrets (not committed)
-├── .gitignore
-├── vite.config.js
-└── package.json
-```
----
-## 🔐 Authentication & Security
-Virtual Clinix uses **Supabase Auth** for secure, JWT-based authentication, combined with a custom **`ProtectedRoute`** component in React for frontend route guarding.
-| Guard Level | Implementation |
-| :--- | :--- |
-| **Unauthenticated Users** | Redirected to `/auth` or specific login pages |
-| **Role Mismatch** | A patient accessing `/admin` is blocked and redirected |
-| **Database Level** | Supabase RLS policies enforce data ownership at query level |
-| **Sensitive Keys** | Stored in `.env.local`, excluded from version control |
----
-## 🌿 Git Branching Strategy
-This project follows the **Git Flow** branching model:
-```
-main           → Production-ready stable releases
-  └─ develop   → Active development integration base
-       ├─ feature/realtime-notifications  → (planned) Real-time alerts
-       ├─ feature/typescript-migration    → (planned) Type safety upgrade
-       └─ feature/pwa-support            → (future)  Offline PWA mode
-```
-- All new features branch off from `develop`
-- Tested, stable features merge back into `develop`
-- When a release milestone is reached, `develop` merges into `main` for production deployment
----
-## 🤝 Contributing
-Contributions are always welcome! Please follow these steps:
-1. **Fork** the repository
-2. Create a feature branch: `git checkout -b feature/your-feature-name`
-3. Commit your changes: `git commit -m 'feat: add some amazing feature'`
-4. Push to your branch: `git push origin feature/your-feature-name`
-5. Open a **Pull Request** targeting the `develop` branch
----
-## 👨‍💻 Team
-**University of Engineering & Technology (UET)**
-*Semester 3 — Software Engineering Project*
+
+# 👨‍💻 Team
+
 | Role | Name |
-| :--- | :--- |
-| **Lead Developer** | Asim |
-| **Project** | Virtual Clinix — Telemedicine Platform |
-| **Course** | Software Engineering |
+|---|---|
+| Lead Developer | Asim |
+| University | UET Pakistan |
+| Course | Software Engineering |
+
 ---
+
 <div align="center">
-**Made with ❤️ at UET Pakistan**
-*Virtual Clinix — Bringing Quality Healthcare to Every Home*
+
+## ❤️ Made with Passion at UET Pakistan
+
+### *Virtual Clinix — Bringing Quality Healthcare to Every Home*
+
 </div>
